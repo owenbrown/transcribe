@@ -9,6 +9,7 @@ then reranks by string similarity on the vendor name and address components.
 
 ## Prerequisites
 
+- macOS
 - Python 3.11+
 - [uv](https://docs.astral.sh/uv/) package manager
 - PostgreSQL 14+ (already installed on the host)
@@ -20,35 +21,33 @@ search and **pg_trgm** for trigram-based fuzzy text matching on vendor names.
 
 ### pgvector
 
+Build from source. You need `pg_config` on your PATH (it ships with your
+PostgreSQL installation).
+
 ```bash
-# Ubuntu / Debian (match your PostgreSQL major version)
-sudo apt install postgresql-16-pgvector
+# Verify pg_config is available
+pg_config --version
 
-# macOS with Homebrew
-brew install pgvector
-
-# From source (any platform)
+# Build and install pgvector
 git clone https://github.com/pgvector/pgvector.git
 cd pgvector
-make && sudo make install
+make
+make install
 ```
+
+If you use **Postgres.app** (version 2.7+), pgvector is already bundled —
+skip straight to creating the database.
 
 After installing, the extension is activated automatically by the setup
 script (`CREATE EXTENSION IF NOT EXISTS vector`).
 
 ### pg_trgm
 
-pg_trgm ships with PostgreSQL in the `postgresql-contrib` package. It is
-usually already installed.
+pg_trgm ships with PostgreSQL and is available by default on macOS
+PostgreSQL installations (including Postgres.app). No extra installation
+is needed.
 
-```bash
-# Ubuntu / Debian — install if not present
-sudo apt install postgresql-contrib
-
-# macOS with Homebrew — included by default
-```
-
-Like pgvector, the extension is activated by the setup script
+The extension is activated by the setup script
 (`CREATE EXTENSION IF NOT EXISTS pg_trgm`).
 
 ### Create the database
