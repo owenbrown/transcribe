@@ -1,0 +1,30 @@
+[project]
+name = "address-correction"
+version = "0.1.0"
+description = "Address error correction using character n-gram embeddings and pgvector"
+requires-python = ">=3.11"
+dependencies = [
+    "scikit-learn>=1.4",
+    "numpy>=1.26",
+    "psycopg[binary]>=3.1",
+    "pgvector>=0.3",
+    "pyarrow>=15.0",
+    "duckdb>=1.0",
+    "rapidfuzz>=3.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-mock>=3.12",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/address_correction"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
